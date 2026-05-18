@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.App03_ConversordeMoeda">
         <activity
-            android:name=".controller.Conversor"
+            android:name=".controller.ConvertActivity"
             android:exported="false" />
         <activity
             android:name=".controller.MainActivity"

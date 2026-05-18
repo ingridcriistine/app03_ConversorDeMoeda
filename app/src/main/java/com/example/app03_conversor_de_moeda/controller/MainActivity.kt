@@ -1,33 +1,48 @@
 package com.example.app03_conversor_de_moeda.controller
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.app03_conversor_de_moeda.R
-import com.example.app03_conversor_de_moeda.api.AwesomeAPI
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import com.example.app03_conversor_de_moeda.databinding.ActivityMainBinding
+import com.example.app03_conversor_de_moeda.model.Wallet
+import java.text.NumberFormat
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var awesomeApi: AwesomeAPI
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.btnConverter.setOnClickListener {
+            startActivity(Intent(this, ConvertActivity::class.java))
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateBalances()
+    }
+
+    private fun updateBalances() {
+        val brlFmt = NumberFormat.getNumberInstance(Locale("pt", "BR")).apply {
+            minimumFractionDigits = 2
+            maximumFractionDigits = 2
+        }
+        val usdFmt = NumberFormat.getNumberInstance(Locale.US).apply {
+            minimumFractionDigits = 2
+            maximumFractionDigits = 2
+        }
+        val btcFmt = NumberFormat.getNumberInstance(Locale.US).apply {
+            minimumFractionDigits = 6
+            maximumFractionDigits = 6
         }
 
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://economia.awesomeapi.com.br/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        awesomeApi = retrofit.create(AwesomeAPI::class.java)
+        binding.txtReal.text = "R$ ${brlFmt.format(Wallet.brl)}"
+        binding.txtDollar.text = "$ ${usdFmt.format(Wallet.usd)}"
+        binding.txtBitcoin.text = "${btcFmt.format(Wallet.btc)} BTC"
     }
 }
