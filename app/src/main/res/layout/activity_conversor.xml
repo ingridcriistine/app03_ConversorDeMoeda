@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="#F5F5F5"
-    tools:context=".controller.Conversor">
+    tools:context=".controller.Converter"
+    android:id="@+id/main">
 
     <!-- CONTEÚDO -->
 
@@ -21,14 +22,45 @@
 
             <!-- TÍTULO -->
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Converter Moedas"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                android:textColor="#111111"
-                android:layout_marginBottom="24dp"/>
+
+                android:orientation="horizontal"
+
+                android:gravity="center_vertical"
+
+                android:padding="16dp">
+
+                <ImageButton
+                    android:id="@+id/btnVoltar"
+
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+
+                    android:src="@drawable/arrow_back"
+
+                    android:background="@android:color/transparent"
+
+                    android:contentDescription="Voltar"
+
+                    android:padding="5dp"
+
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="Conversor de Moedas"
+
+                    android:textSize="22sp"
+
+                    android:textStyle="bold"
+
+                    android:layout_marginStart="8dp"/>
+
+            </LinearLayout>
 
             <!-- ORIGEM -->
 
@@ -59,7 +91,7 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:src="@drawable/real"
-                        app:tint="#0E6B2D"/>
+                        app:tint="#000000"/>
 
                     <Spinner
                         android:id="@+id/spinnerOrigem"
@@ -99,13 +131,13 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:src="@drawable/dolar"
-                        app:tint="#2454A6"/>
+                        app:tint="#000000"/>
 
                     <Spinner
                         android:id="@+id/spinnerDestino"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"/>
+                        android:layout_marginStart="14dp"/>
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -221,6 +253,7 @@
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
+
 
         </LinearLayout>
 
