@@ -100,14 +100,17 @@ class ConvertActivity : AppCompatActivity() {
     }
 
     // Retorna o par da API e se deve multiplicar (true) ou dividir (false)
+    // BID = preço que API COMPRA | ASK = preço que API VENDE
+    // Se está VENDENDO sua moeda (from) para RECEBER moeda destino (to), usa BID
+    // Se está COMPRANDO moeda destino, usa ASK
     private fun resolveApiPair(from: String, to: String): Pair<String, Boolean> =
         when ("$from->$to") {
-            "USD->BRL" -> "USD-BRL" to true   // amount * bid
-            "BRL->USD" -> "USD-BRL" to false  // amount / ask
-            "BTC->BRL" -> "BTC-BRL" to true   // amount * bid
-            "BRL->BTC" -> "BTC-BRL" to false  // amount / ask
-            "BTC->USD" -> "BTC-USD" to true   // amount * bid
-            "USD->BTC" -> "BTC-USD" to false  // amount / ask
+            "USD->BRL" -> "USD-BRL" to false  // Vendendo USD, recebendo BRL: amount / bid
+            "BRL->USD" -> "USD-BRL" to true   // Comprando USD com BRL: amount * ask
+            "BTC->BRL" -> "BTC-BRL" to false  // Vendendo BTC, recebendo BRL: amount / bid
+            "BRL->BTC" -> "BTC-BRL" to true   // Comprando BTC com BRL: amount * ask
+            "BTC->USD" -> "BTC-USD" to false  // Vendendo BTC, recebendo USD: amount / bid
+            "USD->BTC" -> "BTC-USD" to true   // Comprando BTC com USD: amount * ask
             else -> throw IllegalArgumentException("Par desconhecido: $from -> $to")
         }
 
